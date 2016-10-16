@@ -1,0 +1,36 @@
+name: MyPrefix
+main: myprefix.Main
+author: maru
+version: "1.0.0"
+api: ["1.0.0"]
+
+commands:
+ 칭호:
+  usage: "/칭호 <설정|제거|목록>"
+  description: "칭호를 관리합니다."
+  permission: myprefix.commands.prefix
+ 칭호관리:
+  usage: "/칭호관리 <추가|제거|목록|설정>"
+  description: "다른 유저들의 칭호를 관리합니다."
+  permission: myprefix.commands.prefixmanage
+
+permissions:
+ myprefix.*:
+  default: OP
+  children:
+   myprefix.commands.*:
+    default: OP
+    children:
+     myprefix.commands.prefix:
+      default: true
+      children:
+       myprefix.commands.prefix.set:
+       myprefix.commands.prefix.remove:
+       myprefix.commands.prefix.list:
+     myprefix.commands.prefixmanage:
+      default: OP
+      children:
+       myprefix.commands.prefixmanage.add:
+       myprefix.commands.prefixmanage.remove:
+       myprefix.commands.prefixmanage.list:
+       myprefix.commands.prefixmanage.set:
