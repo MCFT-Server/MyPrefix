@@ -81,7 +81,7 @@ public class EventListener {
 					PageCreater creater = new PageCreater();
 					Object[] pages = creater.getPage(PrefixManager.getInstance().getPrefixList(sender.getName()).toArray(), page);
 					for (int i = 0; i < creater.getPageCount(); i++) {
-						
+						//TODO
 					}
 				} catch (NumberFormatException e) {
 					alert(sender, "페이지는 정수만 입력 가능합니다.");
