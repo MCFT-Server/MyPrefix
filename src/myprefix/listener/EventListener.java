@@ -104,7 +104,7 @@ public class EventListener implements Listener {
 					break;
 				}
 				if (args.length < 3) {
-					alert(sender, "/칭호 추가 <플레이어> <칭호>");
+					alert(sender, "/칭호관리 추가 <플레이어> <칭호>");
 					break;
 				}
 				PrefixManager.getInstance().addPrefix(args[1], args[2]);
@@ -116,7 +116,7 @@ public class EventListener implements Listener {
 					break;
 				}
 				if (args.length < 3) {
-					alert(sender, "/칭호 제거 <플레이어> <번호>");
+					alert(sender, "/칭호관리 제거 <플레이어> <번호>");
 					break;
 				}
 				try {
@@ -133,7 +133,7 @@ public class EventListener implements Listener {
 					break;
 				}
 				if (args.length < 3) {
-					alert(sender, "/칭호 목록 <플레이어> <페이지>");
+					alert(sender, "/칭호관리 목록 <플레이어> <페이지>");
 					break;
 				}
 				try {
@@ -149,7 +149,7 @@ public class EventListener implements Listener {
 					break;
 				}
 				if (args.length < 3) {
-					alert(sender, "/칭호 설정 <플레이어> <번호>");
+					alert(sender, "/칭호관리 설정 <플레이어> <번호>");
 					break;
 				}
 				try {
