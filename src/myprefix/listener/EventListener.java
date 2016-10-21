@@ -46,7 +46,7 @@ public class EventListener implements Listener {
 					PrefixManager.getInstance().setPrefix(sender.getName(), num);
 					message(sender, "칭호를 " + PrefixManager.getInstance().getPrefix(sender.getName())
 							+ TextFormat.DARK_AQUA + "로 설정했습니다.");
-				} catch (ArrayIndexOutOfBoundsException e) {
+				} catch (IndexOutOfBoundsException e) {
 					alert(sender, "당신은 해당 번호의 칭호를 보유하고 있지 않습니다.");
 				} catch (NumberFormatException e) {
 					alert(sender, "번호는 정수만 입력 가능합니다.");
@@ -66,7 +66,7 @@ public class EventListener implements Listener {
 					String removed = PrefixManager.getInstance().removePrefix(sender.getName(), num);
 					message(sender, removed + TextFormat.DARK_AQUA + " 칭호를 삭제했습니다.");
 					break;
-				} catch (ArrayIndexOutOfBoundsException e) {
+				} catch (IndexOutOfBoundsException e) {
 					alert(sender, "당신은 해당 번호의 칭호를 보유하고 있지 않습니다.");
 				} catch (NumberFormatException e) {
 					alert(sender, "번호는 정수만 입력 가능합니다.");
@@ -157,6 +157,8 @@ public class EventListener implements Listener {
 					message(sender, "칭호를 [" + prefix + TextFormat.DARK_AQUA + "]로 설정했습니다.");
 				} catch (NumberFormatException e) {
 					alert(sender, "번호는 정수만 입력 가능합니다.");
+				} catch (IndexOutOfBoundsException e) {
+					alert(sender, args[1] + "는 해당 번호의 칭호를 보유하고 있지 않습니다.");
 				}
 				break;
 			default:
