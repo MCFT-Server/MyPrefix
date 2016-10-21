@@ -6,6 +6,7 @@ import cn.nukkit.command.ConsoleCommandSender;
 import cn.nukkit.event.EventHandler;
 import cn.nukkit.event.Listener;
 import cn.nukkit.event.player.PlayerChatEvent;
+import cn.nukkit.event.player.PlayerJoinEvent;
 import cn.nukkit.lang.TranslationContainer;
 import cn.nukkit.utils.TextFormat;
 import myprefix.Main;
@@ -173,6 +174,13 @@ public class EventListener implements Listener {
 	public void onChat(PlayerChatEvent event) {
 		event.setFormat(getDB().getConfig().getString("chat-format").replace("%player", "{%0}").replace("%chat", "{%1}")
 				.replace("%prefix", PrefixManager.getInstance().getPrefix(event.getPlayer().getName())));
+	}
+
+	public void onJoin(PlayerJoinEvent event) {
+		event.getPlayer()
+				.setNameTag(getDB().getConfig().getString("nametag-format")
+						.replace("%player", event.getPlayer().getName()).replace("%prefix",
+								PrefixManager.getInstance().getPrefix(event.getPlayer().getName())));
 	}
 
 	private void showPrefixList(CommandSender sender, String who, int page) {

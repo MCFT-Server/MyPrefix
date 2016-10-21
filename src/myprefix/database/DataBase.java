@@ -13,6 +13,14 @@ public class DataBase extends BaseDB<Main> {
 		setPrefix("[칭호]");
 		initDB("prefixlist", new File(plugin.getDataFolder(), "prefixlist.json"), Config.JSON);
 		initDB("prefix", new File(plugin.getDataFolder(), "prefix.json"), Config.JSON);
+		initConfig();
+	}
+	
+	private void initConfig() {
 		saveDefaultConfig();
+		if (getConfig().get("nametag-format") == null) {
+			saveConfig();
+			reloadConfig();
+		}
 	}
 }

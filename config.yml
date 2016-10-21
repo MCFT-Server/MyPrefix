@@ -1,2 +1,3 @@
 default-prefix: "서버원"
 chat-format: "[%prefix§f§r] %player: %chat"
+nametag-format: "[%prefix§f§r] %player"
