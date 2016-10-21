@@ -19,7 +19,7 @@ public class DataBase extends BaseDB<Main> {
 	private void initConfig() {
 		saveDefaultConfig();
 		if (getConfig().get("nametag-format") == null) {
-			saveConfig();
+			saveDefaultConfig();
 			reloadConfig();
 		}
 	}
