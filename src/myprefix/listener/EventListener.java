@@ -176,6 +176,7 @@ public class EventListener implements Listener {
 				.replace("%prefix", PrefixManager.getInstance().getPrefix(event.getPlayer().getName())));
 	}
 
+	@EventHandler
 	public void onJoin(PlayerJoinEvent event) {
 		event.getPlayer()
 				.setNameTag(getDB().getConfig().getString("nametag-format")
