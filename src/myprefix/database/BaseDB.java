@@ -67,7 +67,11 @@ abstract class BaseDB<T extends PluginBase> {
 	}
 	
 	public void saveDefaultConfig() {
-		plugin.saveDefaultConfig();
+		saveDefaultConfig(false);
+	}
+	
+	public void saveDefaultConfig(boolean replace) {
+		plugin.saveResource("config.yml", replace);
 	}
 	
 	public void reloadConfig() {
