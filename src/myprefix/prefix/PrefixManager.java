@@ -57,7 +57,9 @@ public class PrefixManager {
 		if (getPrefix(player).equals(prefix)) {
 			getPrefixConfig().remove(player.toLowerCase());
 		}
-		getPrefixListConfig().getStringList(player.toLowerCase()).remove(index);
+		List<String> list = getPrefixListConfig().getStringList(player.toLowerCase());
+		list.remove(index);
+		getPrefixListConfig().set(player.toLowerCase(), list);
 		return prefix;
 	}
 
