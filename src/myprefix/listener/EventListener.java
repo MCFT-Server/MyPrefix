@@ -3,6 +3,9 @@ package myprefix.listener;
 import cn.nukkit.command.Command;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.command.ConsoleCommandSender;
+import cn.nukkit.event.EventHandler;
+import cn.nukkit.event.Listener;
+import cn.nukkit.event.player.PlayerChatEvent;
 import cn.nukkit.lang.TranslationContainer;
 import cn.nukkit.utils.TextFormat;
 import myprefix.Main;
@@ -10,11 +13,12 @@ import myprefix.database.DataBase;
 import myprefix.prefix.PrefixManager;
 import myprefix.utils.PageCreater;
 
-public class EventListener {
+public class EventListener implements Listener {
 	private Main plugin;
 
 	public EventListener(Main plugin) {
 		this.plugin = plugin;
+		plugin.getServer().getPluginManager().registerEvents(this, plugin);
 	}
 
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -103,7 +107,7 @@ public class EventListener {
 					break;
 				}
 				PrefixManager.getInstance().addPrefix(args[1], args[2]);
-				message(sender, args[1] + "의 에게 [" + args[2] + TextFormat.DARK_AQUA + "]칭호를 추가했습니다.");
+				message(sender, args[1] + "에게 [" + args[2] + TextFormat.DARK_AQUA + "]칭호를 추가했습니다.");
 				break;
 			case "제거":
 				if (!sender.hasPermission("myprefix.commands.prefixmanage.remove")) {
@@ -163,11 +167,17 @@ public class EventListener {
 		return true;
 	}
 
+	@EventHandler
+	public void onChat(PlayerChatEvent event) {
+		event.setFormat(getDB().getConfig().getString("chat-format").replace("%player", "{%0}").replace("%chat", "{%1}")
+				.replace("%prefix", PrefixManager.getInstance().getPrefix(event.getPlayer().getName())));
+	}
+
 	private void showPrefixList(CommandSender sender, String who, int page) {
 		PageCreater creater = new PageCreater();
 		int i = page * creater.getPageCount() - creater.getPageCount();
 		for (String prefix : creater.getPage(PrefixManager.getInstance().getPrefixList(who.toLowerCase()), page)) {
-			message(sender, "[" + ++i + "] " + prefix);
+			message(sender, "[" + i++ + "] " + prefix);
 		}
 	}
 

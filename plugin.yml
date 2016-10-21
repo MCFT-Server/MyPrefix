@@ -25,8 +25,11 @@ permissions:
       default: true
       children:
        myprefix.commands.prefix.set:
+        default: true
        myprefix.commands.prefix.remove:
+        default: true
        myprefix.commands.prefix.list:
+        default: true
      myprefix.commands.prefixmanage:
       default: OP
       children:

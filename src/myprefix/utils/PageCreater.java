@@ -27,6 +27,6 @@ public class PageCreater {
 	}
 	
 	public <T> List<T> getPage(List<T> args, int page) {
-		return args.subList(page * getPageCount() - getPageCount(), page * getPageCount());
+		return args.subList(page * getPageCount() - getPageCount(), args.size() < page * getPageCount() ? args.size() : page * getPageCount());
 	}
 }

@@ -32,7 +32,7 @@ public class PrefixManager {
 	}
 	
 	public String getDefaultPrefix() {
-		return getDB().getConfig().getString("default-prefix");
+		return getDB().getConfig().getString("default-prefix", "서버원");
 	}
 	
 	public void addPrefix(String player, String prefix) {
@@ -77,7 +77,6 @@ public class PrefixManager {
 	}
 	
 	public String getPrefix(String player) {
-		String prefix = getPrefixConfig().getString(player.toLowerCase());
-		return prefix.equals("") ? getDefaultPrefix() : prefix;
+		return getPrefixConfig().getString(player.toLowerCase(), getDefaultPrefix());
 	}
 }
