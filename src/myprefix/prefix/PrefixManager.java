@@ -70,8 +70,10 @@ public class PrefixManager {
 	 * 
 	 * @throws ArrayIndexOutOfBoundsException
 	 */
-	public void setPrefix(String player, int index) {
-		getPrefixConfig().set(player.toLowerCase(), getPrefixList(player.toLowerCase()).get(index));
+	public String setPrefix(String player, int index) {
+		String prefix = getPrefixList(player.toLowerCase()).get(index);
+		getPrefixConfig().set(player.toLowerCase(), prefix);
+		return prefix;
 	}
 	
 	public String getPrefix(String player) {

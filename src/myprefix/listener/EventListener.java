@@ -12,11 +12,11 @@ import myprefix.utils.PageCreater;
 
 public class EventListener {
 	private Main plugin;
-	
+
 	public EventListener(Main plugin) {
 		this.plugin = plugin;
 	}
-	
+
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		switch (command.getName().toLowerCase()) {
 		case "칭호":
@@ -40,7 +40,8 @@ public class EventListener {
 				try {
 					int num = Integer.parseInt(args[1]);
 					PrefixManager.getInstance().setPrefix(sender.getName(), num);
-					message(sender, "칭호를 " + PrefixManager.getInstance().getPrefix(sender.getName()) + TextFormat.DARK_AQUA + "로 설정했습니다.");
+					message(sender, "칭호를 " + PrefixManager.getInstance().getPrefix(sender.getName())
+							+ TextFormat.DARK_AQUA + "로 설정했습니다.");
 				} catch (ArrayIndexOutOfBoundsException e) {
 					alert(sender, "당신은 해당 번호의 칭호를 보유하고 있지 않습니다.");
 				} catch (NumberFormatException e) {
@@ -78,32 +79,106 @@ public class EventListener {
 				}
 				try {
 					int page = Integer.parseInt(args[1]);
-					PageCreater creater = new PageCreater();
-					Object[] pages = creater.getPage(PrefixManager.getInstance().getPrefixList(sender.getName()).toArray(), page);
-					for (int i = 0; i < creater.getPageCount(); i++) {
-						//TODO
-					}
+					showPrefixList(sender, sender.getName(), page);
 				} catch (NumberFormatException e) {
 					alert(sender, "페이지는 정수만 입력 가능합니다.");
 				}
 				break;
+			default:
+				return false;
 			}
 			break;
 		case "칭호관리":
-			//TODO
+			if (args.length < 1) {
+				return false;
+			}
+			switch (args[0]) {
+			case "추가":
+				if (!sender.hasPermission("myprefix.commands.prefixmanage.add")) {
+					sender.sendMessage(new TranslationContainer(TextFormat.RED + "%commands.generic.permission"));
+					break;
+				}
+				if (args.length < 3) {
+					alert(sender, "/칭호 추가 <플레이어> <칭호>");
+					break;
+				}
+				PrefixManager.getInstance().addPrefix(args[1], args[2]);
+				message(sender, args[1] + "의 에게 [" + args[2] + TextFormat.DARK_AQUA + "]칭호를 추가했습니다.");
+				break;
+			case "제거":
+				if (!sender.hasPermission("myprefix.commands.prefixmanage.remove")) {
+					sender.sendMessage(new TranslationContainer(TextFormat.RED + "%commands.generic.permission"));
+					break;
+				}
+				if (args.length < 3) {
+					alert(sender, "/칭호 제거 <플레이어> <번호>");
+					break;
+				}
+				try {
+					int index = Integer.parseInt(args[2]);
+					String removed = PrefixManager.getInstance().removePrefix(args[1], index);
+					message(sender, "칭호 [" + removed + TextFormat.DARK_AQUA + "]를 제거했습니다.");
+				} catch (NumberFormatException e) {
+					alert(sender, "번호는 정수만 입력 가능합니다.");
+				}
+				break;
+			case "목록":
+				if (!sender.hasPermission("myprefix.commands.prefixmanage.list")) {
+					sender.sendMessage(new TranslationContainer(TextFormat.RED + "%commands.generic.permission"));
+					break;
+				}
+				if (args.length < 3) {
+					alert(sender, "/칭호 목록 <플레이어> <페이지>");
+					break;
+				}
+				try {
+					int page = Integer.parseInt(args[2]);
+					showPrefixList(sender, args[1], page);
+				} catch (NumberFormatException e) {
+					alert(sender, "페이지는 정수만 입력 가능합니다.");
+				}
+				break;
+			case "설정":
+				if (!sender.hasPermission("myprefix.commands.prefixmanage.set")) {
+					sender.sendMessage(new TranslationContainer(TextFormat.RED + "%commands.generic.permission"));
+					break;
+				}
+				if (args.length < 3) {
+					alert(sender, "/칭호 설정 <플레이어> <번호>");
+					break;
+				}
+				try {
+					int num = Integer.parseInt(args[2]);
+					String prefix = PrefixManager.getInstance().setPrefix(args[1], num);
+					message(sender, "칭호를 [" + prefix + TextFormat.DARK_AQUA + "]로 설정했습니다.");
+				} catch (NumberFormatException e) {
+					alert(sender, "번호는 정수만 입력 가능합니다.");
+				}
+				break;
+			default:
+				return false;
+			}
 			break;
 		}
 		return true;
 	}
-	
+
+	private void showPrefixList(CommandSender sender, String who, int page) {
+		PageCreater creater = new PageCreater();
+		int i = page * creater.getPageCount() - creater.getPageCount();
+		for (String prefix : creater.getPage(PrefixManager.getInstance().getPrefixList(who.toLowerCase()), page)) {
+			message(sender, "[" + ++i + "] " + prefix);
+		}
+	}
+
 	private DataBase getDB() {
 		return plugin.getDB();
 	}
-	
+
 	private void alert(CommandSender sender, String msg) {
 		getDB().alert(sender, msg);
 	}
-	
+
 	private void message(CommandSender sender, String msg) {
 		getDB().message(sender, msg);
 	}

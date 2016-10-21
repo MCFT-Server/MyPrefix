@@ -1,6 +1,7 @@
 package myprefix.utils;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class PageCreater {
 	private int pageCount;
@@ -22,6 +23,10 @@ public class PageCreater {
 	}
 
 	public <T> T[] getPage(T[] args, int page) {
-		return Arrays.copyOfRange(args, page * getPageCount() - 5, page * getPageCount());
+		return Arrays.copyOfRange(args, page * getPageCount() - getPageCount(), page * getPageCount());
+	}
+	
+	public <T> List<T> getPage(List<T> args, int page) {
+		return args.subList(page * getPageCount() - getPageCount(), page * getPageCount());
 	}
 }
