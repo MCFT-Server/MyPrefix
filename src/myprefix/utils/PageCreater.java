@@ -34,7 +34,7 @@ public class PageCreater {
 		int fromindex = page * getPageCount() - getPageCount();
 		int toindex = page * getPageCount();
 		if (args.size() - 1 > fromindex && args.size() - 1 < toindex)
-			toindex = args.size();
+			toindex = args.size() - 1;
 		return args.subList(fromindex, toindex);
 	}
 }
