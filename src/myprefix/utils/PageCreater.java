@@ -29,12 +29,16 @@ public class PageCreater {
 	
 	public <T> List<T> getPage(List<T> args, int page) {
 		if (page < 1) {
-			return new ArrayList<T>();
+			return new ArrayList<>();
 		}
 		int fromindex = page * getPageCount() - getPageCount();
 		int toindex = page * getPageCount();
-		if (args.size() - 1 > fromindex && args.size() - 1 < toindex)
-			toindex = args.size() - 1;
+		if (args.size() - 1 >= fromindex && args.size() - 1 <= toindex)
+			toindex = args.size();
+		else 
+			if (args.size() < toindex) {
+				return new ArrayList<>();
+			}
 		return args.subList(fromindex, toindex);
 	}
 }
