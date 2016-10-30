@@ -1,5 +1,6 @@
 package myprefix.utils;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -27,6 +28,13 @@ public class PageCreater {
 	}
 	
 	public <T> List<T> getPage(List<T> args, int page) {
-		return args.subList(page < 1 ? 0 : page * getPageCount() - getPageCount(), args.size() < page * getPageCount() ? args.size() : page * getPageCount());
+		if (page < 1) {
+			return new ArrayList<T>();
+		}
+		int fromindex = page * getPageCount() - getPageCount();
+		int toindex = page * getPageCount();
+		if (args.size() - 1 > fromindex && args.size() - 1 < toindex)
+			toindex = args.size();
+		return args.subList(fromindex, toindex);
 	}
 }
