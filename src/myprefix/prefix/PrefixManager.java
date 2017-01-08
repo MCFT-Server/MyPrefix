@@ -85,7 +85,41 @@ public class PrefixManager {
 		return prefix;
 	}
 
+	/**
+	 * 현재 플레이어가 장착한 칭호를 가져옵니다.
+	 * 
+	 * @param player
+	 * @return prefix
+	 */
 	public String getPrefix(String player) {
 		return getPrefixConfig().getString(player.toLowerCase(), getDefaultPrefix());
+	}
+	
+	/**
+	 * 플레이어의 해당 인덱스의 칭호를 가져옵니다.
+	 * 
+	 * @param player
+	 * @param index
+	 * 
+	 * 
+	 * @return prefix
+	 */
+	public String getPrefix(String player, int index) {
+		return getPrefixList(player).get(index);
+	}
+	
+	/**
+	 * 플레이어 보유 칭호 목록중 해당 칭호가 위치한 인덱스를 얻습니다.
+	 * 
+	 * @param player
+	 * @param prefix
+	 * @return index. if player doesn't have that prefix, it returns -1
+	 */
+	public int getIndex(String player, String prefix) {
+		List<String> list = getPrefixList(player);
+		for (int i = 0; i < list.size(); i++) {
+			if (list.get(i).equals(prefix)) return i;
+		}
+		return -1;
 	}
 }
